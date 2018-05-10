@@ -81,9 +81,9 @@ if __name__ == "__main__":
     try:
         tornado.options.parse_command_line()
 
-        app.listen(int(os.environ.get("PORT", 9999)))
+        app.listen(9999)
 
-        print("Tornado on port: %i" % int(os.environ.get("PORT", 9999)))
+        print("Tornado on port: %i" % 9999)
 
         io_loop = tornado.ioloop.IOLoop.instance()
         io_loop.start()
