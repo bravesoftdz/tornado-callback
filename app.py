@@ -49,12 +49,12 @@ class GerarCertidaoHandler(tornado.web.RequestHandler):
             )
 
             def callback(response):
-                pass
+                print('retorno', response)
 
             client.fetch(request, raise_error=True, callback=callback)
 
             self.set_status(201)
-            self.finish()
+            self.finish({})
 
 
 class Application(tornado.web.Application):
