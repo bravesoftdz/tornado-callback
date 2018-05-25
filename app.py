@@ -23,9 +23,9 @@ class GerarCertidaoHandler(tornado.web.RequestHandler):
 
         data = json_decode(self.request.body)
 
-        wait = self.get_argument('wait', '1')
+        wait = self.get_argument('wait', 'true')
 
-        if wait != '0':
+        if wait == 'true':
             self.set_status(201)
             self.finish(data)
         else:
@@ -48,11 +48,13 @@ class GerarCertidaoHandler(tornado.web.RequestHandler):
                 validate_cert=False,
             )
 
+            print('callback_url', callback_url)
+
             def callback(response):
                 print('retorno', response)
 
-            client.fetch(request, raise_error=True, callback=callback)
-
+            response = client.fetch(request, raise_error=True, callback=callback)
+            print(response)
             self.set_status(201)
             self.finish({})
 
