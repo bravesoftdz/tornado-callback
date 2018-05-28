@@ -25,16 +25,17 @@ class GerarCertidaoHandler(tornado.web.RequestHandler):
 
         wait = self.get_argument('wait', 'true')
 
-        if wait == 'true':
-            self.set_status(201)
-            self.finish(data)
-        else:
+        self.set_status(201)
+        self.finish({})
+
+        if wait == 'false':
             callback_url = self.get_argument('callbackUrl', '')
             callback_user = self.get_argument('callbackUser', '')
             callback_password = self.get_argument('callbackPassword', '')
 
+            # Espera 5 segundos
             import time
-            time.sleep(2)
+            time.sleep(5)
 
             client = AsyncHTTPClient()
 
@@ -53,10 +54,9 @@ class GerarCertidaoHandler(tornado.web.RequestHandler):
             def callback(response):
                 print('retorno', response)
 
-            response = client.fetch(request, raise_error=True, callback=callback)
+            response = client.fetch(
+                request, raise_error=True, callback=callback)
             print(response)
-            self.set_status(201)
-            self.finish({})
 
 
 class Application(tornado.web.Application):
